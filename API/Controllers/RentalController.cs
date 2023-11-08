@@ -21,10 +21,10 @@ namespace API.Controllers
         }
         #endregion
 
-        #region [Post] AddAsync **
+        #region [Post] AddAsync **Checkout CreatedAtAction
         // Route: api/rent/id
         [HttpPost("rent/{id}")]
-        public async Task<ActionResult<Rental>> AddAsync([FromBody] Rental rental) //Understand | Is [FromBody/FromQuery] needed in the api?
+        public async Task<ActionResult<Rental>> AddAsync([FromBody] Rental rental)
         {
             if (productContext.Surfboard == null)
             {

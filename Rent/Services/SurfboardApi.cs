@@ -1,55 +1,94 @@
-﻿using Lib.Models.Product;
-using Microsoft.AspNetCore.Mvc;
-using NuGet.Protocol;
+﻿using AspNetCore;
+using Lib.Models.Product;
+using Lib.Services.Data;
 using System.Text.Json;
 
 namespace Rent.Services
 {
     public class SurfboardApi : IApi<Surfboard>
     {
-        private readonly HttpClient httpClient;
+        #region Dependency Injections
+        private readonly HttpClient httpClient = new();
+        private readonly ProductContext productContext;
 
-        public SurfboardApi(HttpClient httpClient)
+        public SurfboardApi(ProductContext productContext)
         {
-            this.httpClient = httpClient;
+            this.productContext = productContext;
         }
+        #endregion
 
         #region AddAsync
         public async Task AddAsync(string apiUrl, Surfboard surfboard)
         {
             try
             {
-                await httpClient.PostAsync(apiUrl, surfboard);
-                httpClient.SendAsync();
+                if (surfboard == null)
+                {
+                    // Message to API
+                    var jsonSerializedModel = JsonSerializer.Serialize(surfboard);
+                    await httpClient.PostAsJsonAsync(apiUrl, jsonSerializedModel);
+                }
+            }
+            catch
+            {
+                throw new Exception();
             }
         }
         #endregion
 
         #region EditAsync
-        public async Task EditAsync(string apiUrl, int id)
+        public async Task EditAsync(string apiUrl, int id, Surfboard surfboard)
         {
-
+            try
+            {
+                if (surfboard != null)
+                {
+                    // Message to API
+                    var jsonSerializedModel = JsonSerializer.Serialize(surfboard);
+                    await httpClient.PostAsJsonAsync(apiUrl, jsonSerializedModel);
+                }
+            }
+            catch
+            {
+                throw new Exception();
+            }
         }
         #endregion
 
         #region DeleteAsync
         public async Task DeleteAsync(string apiUrl, int id)
         {
+            try
+            {
+                Surfboard? selected = await productContext.Surfboard.FindAsync(id);
 
+                if (selected != null)
+                {
+                    // Message to API
+                    var jsonSerializedModel = JsonSerializer.Serialize(selected);
+                    await httpClient.PostAsJsonAsync(apiUrl, jsonSerializedModel);
+                }
+            }
+            catch
+            {
+                throw new Exception();
+            }
         }
         #endregion
 
-        #region GetAllAsync
+        #region GetAllAsync **Reconsider the valid return types
         public async Task<object> GetAllAsync(string apiUrl)
         {
             try
             {
+                // Responce from API
                 var apiResponse = await httpClient.GetAsync(apiUrl);
 
                 if (apiResponse != null)
                 {
                     try
                     {
+                        //Converting the response to a valid return type
                         var jsonSerialize = await apiResponse.Content.ReadAsStringAsync();
                         IEnumerable<Surfboard> deserializedModel = JsonSerializer.Deserialize<IEnumerable<Surfboard>>(jsonSerialize);
 
@@ -67,7 +106,7 @@ namespace Rent.Services
             }
             catch
             {
-                return "Failed doing the api call";
+                return "Failed doing the API call";
             }
         }
         #endregion

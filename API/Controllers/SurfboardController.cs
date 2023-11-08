@@ -21,6 +21,7 @@ namespace API.Controllers
         #endregion
 
         #region [Post] AddAsync
+        // Route: api/surfboard/add
         [HttpPost("surfboard/add"), Authorize(Roles = "Employee")]
         public async Task<ActionResult<Surfboard>> AddAsync([Bind] Surfboard surfboard)
         {
@@ -29,7 +30,7 @@ namespace API.Controllers
                 productContext.Surfboard.Add(surfboard);
                 await productContext.SaveChangesAsync();
 
-                return Ok(surfboard);
+                return Ok(productContext.Surfboard);
             }
             else
             {
@@ -39,20 +40,21 @@ namespace API.Controllers
         }
         #endregion
 
-        #region [Put] EditAsync
+        #region [Put] EditAsync **Add concurrency logic **Checkout return type
+        // Route: api/surfboard/edit/id
         [HttpPut("surfboard/edit/{id}"), Authorize(Roles = "Employee")]
-        public async Task<ActionResult<Surfboard>> EditAsync([FromBody] Surfboard surfboard)
+        public async Task<ActionResult<Surfboard>> EditAsync([FromBody, Bind] Surfboard surfboard)
         {
             if (ModelState.IsValid)
             {
-                Surfboard? current = await productContext.Surfboard.FindAsync(surfboard.Id);
+                Surfboard? selected = await productContext.Surfboard.FindAsync(surfboard.Id);
 
-                if (current != null)
+                if (selected != null)
                 {
                     productContext.Surfboard.Update(surfboard);
                     await productContext.SaveChangesAsync();
 
-                    return Ok(productContext.Surfboard); //returns the updates context?
+                    return Ok(productContext.Surfboard); //returns the updated context?
                 }
                 else
                 {
@@ -67,6 +69,7 @@ namespace API.Controllers
         #endregion
 
         #region [Delete] DeleteAsync
+        // Route: api/surfboard/delete/id
         [HttpDelete("surfboard/delete/{id}"), Authorize(Roles = "Employee")]
         public async Task<ActionResult<Surfboard>> DeleteAsync([FromQuery] int id)
         {
@@ -75,15 +78,18 @@ namespace API.Controllers
                 return NotFound("Due to the automatic dataseed of Surfboard items, there is an error loading or initializing the items");
             }
 
-            Surfboard? current = await productContext.Surfboard.FindAsync(id);
+            Surfboard? selected = await productContext.Surfboard.FindAsync(id);
 
-            if (current != null)
+            if (selected != null)
             {
+                productContext.Surfboard.Remove(selected);
+                await productContext.SaveChangesAsync();
+
                 return Ok(productContext.Surfboard);
             }
             else
             {
-                return NotFound("The current product you are tying to delete was not found");
+                return NotFound("The current product you are tying to delete was not found (or already removed)");
             }
         }
         #endregion
