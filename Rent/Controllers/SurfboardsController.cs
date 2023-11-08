@@ -60,9 +60,9 @@ namespace Rent.Controllers
 
         // Route: Surfboards/Edit/id
         [HttpPost, Authorize(Roles = "Employee")]
-        public async Task<IActionResult> Edit(int id, [FromBody, Bind] Surfboard surfboard)
+        public async Task<IActionResult> Edit([FromBody, Bind] Surfboard surfboard)
         {
-            await surfboardApi.EditAsync("", id, surfboard);
+            await surfboardApi.EditAsync("", surfboard);
 
             return RedirectToAction(nameof(Index));
         }

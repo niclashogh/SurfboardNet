@@ -6,7 +6,7 @@ namespace Rent.Services
     {
         Task AddAsync(string apiUrl, T model);
 
-        Task EditAsync(string apiUrl, int id, T model);
+        Task EditAsync(string apiUrl, T model);
 
         Task DeleteAsync(string apiUrl, int id);
 

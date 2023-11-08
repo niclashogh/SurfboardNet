@@ -37,7 +37,7 @@ namespace Rent.Services
         #endregion
 
         #region EditAsync
-        public async Task EditAsync(string apiUrl, int id, Surfboard surfboard)
+        public async Task EditAsync(string apiUrl, Surfboard surfboard)
         {
             try
             {
