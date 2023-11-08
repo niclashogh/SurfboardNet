@@ -5,7 +5,7 @@ namespace API.Controllers
 {
     [Route("api")]
     [ApiController]
-    public class GuestController : ControllerBase, IController<Guest>
+    public class GuestController : ControllerBase//, IController<Guest>
     {
         private readonly GuestContext guestContext;
 

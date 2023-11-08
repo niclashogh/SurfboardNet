@@ -27,7 +27,7 @@ namespace Rent
 
             // Add Api Client
             //builder.Services.AddHttpClient<APIHERE>();
-            builder.Services.AddHttpClient<IHttpClientFactory>();
+            //builder.Services.AddHttpClient<IHttpClientFactory>();
 
             var app = builder.Build();
 
@@ -51,20 +51,20 @@ namespace Rent
                 var services = scope.ServiceProvider;
 
                 // create roles
-                var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                //var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
                 //var userManager = services.GetRequiredService<UserManager<Customer>>();
                 //var guestManager = services.GetRequiredService<UserManager<Guest>>();
 
                 // check if role exists and if they dont, create them
-                if (!roleManager.RoleExistsAsync("Customer").Result)
-                {
-                    roleManager.CreateAsync(new IdentityRole("Customer")).Wait();
-                }
+                //if (!roleManager.RoleExistsAsync("Customer").Result)
+                //{
+                //    roleManager.CreateAsync(new IdentityRole("Customer")).Wait();
+                //}
 
-                if (!roleManager.RoleExistsAsync("Employee").Result)
-                {
-                    roleManager.CreateAsync(new IdentityRole("Employee")).Wait();
-                }
+                //if (!roleManager.RoleExistsAsync("Employee").Result)
+                //{
+                //    roleManager.CreateAsync(new IdentityRole("Employee")).Wait();
+                //}
 
                 //if (!roleManager.RoleExistsAsync("Guest").Result)
                 //{

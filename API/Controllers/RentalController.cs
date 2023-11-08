@@ -14,30 +14,24 @@ namespace API.Controllers
     {
         #region Dependency Injections
         private readonly ProductContext productContext;
-        private readonly CustomerContext userContext;
-        private readonly EmployeeContext employeeContext;
-        private readonly GuestContext guestContext;
 
-        public RentalController(ProductContext productContext,CustomerContext userContext, EmployeeContext employeeContext, GuestContext guestContext)
+        public RentalController(ProductContext productContext)
         {
             this.productContext = productContext;
-            this.userContext = userContext;
-            this.employeeContext = employeeContext;
-            this.guestContext = guestContext;
         }
         #endregion
 
-        #region [Post] RentAsync
+        #region [Post] AddAsync **
         // Route: api/rent/id
         [HttpPost("rent/{id}")]
-        public override async Task<ActionResult<Rental>> RentAsync([FromQuery] int id, [FromBody] Rental rental) //Understand
+        public async Task<ActionResult<Rental>> AddAsync([FromBody] Rental rental) //Understand | Is [FromBody/FromQuery] needed in the api?
         {
             if (productContext.Surfboard == null)
             {
-                return NotFound("Due to the automatic dataseed of Surfboard items, there is an error loading or saving the items");
+                return NotFound("Due to the automatic dataseed of Surfboard items, there is an error loading or initializing the items");
             }
 
-            bool rentalIsAvailable = await productContext.Rental.AnyAsync(rental => rental.SurfboardId != id);
+            bool rentalIsAvailable = await productContext.Rental.AnyAsync(obj => obj.SurfboardId != rental.Id);
 
             if (!rentalIsAvailable)
             {
@@ -48,14 +42,14 @@ namespace API.Controllers
                 productContext.Rental.Add(rental);
                 await productContext.SaveChangesAsync();
 
-                return CreatedAtAction("GetRental", new { id = rental.Id }, rental); //??
+                return CreatedAtAction("GetRental", new { Id = rental.Id }, rental); //??
             }
             else if (rental.GuestEmail != null && rental.Surbroad.Price <= 200)
             {
-                //_context.Rental.Add(rental);
-                //await _context.SaveChangesAsync();
+                productContext.Rental.Add(rental);
+                await productContext.SaveChangesAsync();
 
-                return CreatedAtAction("GetRental", new { id = rental.Id }, rental);
+                return CreatedAtAction("GetRental", new { Id = rental.Id }, rental); //??
             }
             else
             {
@@ -65,9 +59,11 @@ namespace API.Controllers
         #endregion
 
         #region [Put] EditAsync
-        public async Task<ActionResult<Rental>> EditAsync([FromQuery] int id)
+        // Route: api/rental/edit/id
+        [HttpPut("rental/edit/{id}"), Authorize]
+        public async Task<ActionResult<Rental>> EditAsync([Bind] Rental rental)
         {
-
+            return BadRequest("You are not allowed to edit your rentals, this is a professional store, not your grandma's market stall");
         }
         #endregion
 
@@ -128,13 +124,6 @@ namespace API.Controllers
             {
                 return BadRequest("You need to be logged in to see your rented items, if you have rented an item as Guest, please check your email that you privided when you rented the board");
             }
-        }
-        #endregion
-
-        #region AddAsync (NotUsed)
-        public async Task<ActionResult<Rental>> AddAsync()
-        {
-            throw new NotImplementedException();
         }
         #endregion
     }

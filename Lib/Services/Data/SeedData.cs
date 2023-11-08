@@ -10,7 +10,11 @@ namespace Lib.Services.Data
         {
             using (var context = new ProductContext(serviceProvider.GetRequiredService<DbContextOptions<ProductContext>>()))
             {
-                if (!context.Surfboard.Any())
+                if (context.Surfboard.Any())
+                {
+                    return;
+                }
+                else
                 {
                     context.Surfboard.AddRange(
                     new Surfboard

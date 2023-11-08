@@ -23,6 +23,7 @@ namespace Lib.Models.Service
         [Required, DisplayName("Price"), Column(TypeName = "decimal(18, 2)")]
         public decimal Cost { get; set; }
 
+        #region ForeignKey navigation properties
         [ForeignKey("CustomerId")]
         public Customer? Customer { get; set; }
 
@@ -31,6 +32,7 @@ namespace Lib.Models.Service
 
         [ForeignKey("SurfboardId")]
         public Surfboard Surbroad { get; set; }
+        #endregion
 
         [Timestamp]
         public byte[]? RowVersion { get; set; }

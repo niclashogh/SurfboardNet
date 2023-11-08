@@ -7,7 +7,7 @@ namespace API.Controllers
 {
     [Route("api")]
     [ApiController]
-    public class CustomerController : ControllerBase, IController<Customer>
+    public class CustomerController : ControllerBase//, IController<Customer>
     {
         private readonly CustomerContext customerContext;
 

@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Lib.Models.User
 {
-    public class Employee : Customer
+    public class Employee : IdentityUser
     {
-        [Required]
-        public bool CanEditProducts { get; set; } = true; //Needed ?
+        //
     }
 }
