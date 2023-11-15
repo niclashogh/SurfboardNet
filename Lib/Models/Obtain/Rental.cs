@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 
-namespace Lib.Models.Service
+namespace Lib.Models.Obtain
 {
     public class Rental : AbstractObtain
     {

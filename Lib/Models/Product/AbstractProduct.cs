@@ -6,7 +6,6 @@ namespace Lib.Models.Product
 {
     public abstract class AbstractProduct
     {
-        [Key]
         public int Id { get; set; }
 
         [Required]

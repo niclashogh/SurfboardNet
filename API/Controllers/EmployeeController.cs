@@ -1,6 +1,4 @@
-﻿using Lib.Models.User;
-using Lib.Services.Data;
-using Microsoft.AspNetCore.Http;
+﻿using API.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers

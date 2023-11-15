@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using Lib.Models.Product;
 
-namespace Lib.Models.Service
+namespace Lib.Models.Obtain
 {
     public abstract class AbstractObtain
     {

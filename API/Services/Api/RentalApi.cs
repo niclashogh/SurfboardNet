@@ -1,8 +1,6 @@
-﻿using Lib.Models.Service;
-
-namespace Rent.Services
+﻿namespace API.Service.Api
 {
-    public class RentalApi : IApi<Rental>
+    public class RentalApi// : IApi<Rental>
     {
         private readonly HttpClient httpClient;
 

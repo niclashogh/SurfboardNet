@@ -1,8 +1,7 @@
 ﻿using Lib.Models.Product;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace Lib.Services.Data
+namespace API.Data
 {
     public class SeedData
     {

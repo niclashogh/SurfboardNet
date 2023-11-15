@@ -1,4 +1,4 @@
-﻿namespace Lib.Models.Service
+﻿namespace Lib.Models.Obtain
 {
     public class Bought : AbstractObtain
     {

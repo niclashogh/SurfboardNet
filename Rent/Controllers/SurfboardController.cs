@@ -1,21 +1,20 @@
-﻿using Lib.Models.Product;
-using Lib.Services.Data;
+﻿using Microsoft.AspNetCore.Mvc;
+using Lib.Models.Product;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Rent.Services;
+using Rent.Data;
+using API.Service.Api;
 
 namespace Rent.Controllers
 {
-    public class SurfboardsController : Controller
+    public class SurfboardController : Controller, IController<Surfboard>
     {
         #region Dependency Injections
         private readonly ProductContext productContext;
         private readonly SurfboardApi surfboardApi;
 
-        public SurfboardsController(ProductContext productContext)
+        public SurfboardController(ProductContext context)
         {
-            this.productContext = productContext;
-            surfboardApi = new(productContext);
+            productContext = context;
         }
         #endregion
 
@@ -32,7 +31,7 @@ namespace Rent.Controllers
         public async Task<IActionResult> Create([Bind] Surfboard surfboard) // Think as the button-action
         {
             await surfboardApi.AddAsync("https://localhost:7051/api/surfboard/add", surfboard);
-            
+
             return RedirectToAction(nameof(Index));
         }
         #endregion
@@ -76,7 +75,7 @@ namespace Rent.Controllers
             if (id != null)
             {
                 Surfboard? selected = await productContext.Surfboard.FindAsync(id);
-                
+
                 if (selected != null)
                 {
                     return View(selected);

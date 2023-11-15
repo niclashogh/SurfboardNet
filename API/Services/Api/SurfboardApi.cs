@@ -1,9 +1,8 @@
-﻿using AspNetCore;
+﻿using API.Data;
 using Lib.Models.Product;
-using Lib.Services.Data;
 using System.Text.Json;
 
-namespace Rent.Services
+namespace API.Service.Api
 {
     public class SurfboardApi : IApi<Surfboard>
     {

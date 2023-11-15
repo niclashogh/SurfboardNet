@@ -2,14 +2,12 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Lib.Services.Data
+namespace API.Data
 {
     public class CustomerContext : IdentityDbContext<Customer>
     {
-        public CustomerContext(DbContextOptions<CustomerContext> options) : base(options)
-        {
-        }
+        public CustomerContext(DbContextOptions<CustomerContext> options) : base(options) { }
 
-        public DbSet<Customer> Customer { get; set; }
+        public DbSet<Customer> Customer { get; set; } = default!;
     }
 }

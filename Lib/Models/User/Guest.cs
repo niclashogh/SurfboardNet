@@ -4,7 +4,6 @@ namespace Lib.Models.User
 {
     public class Guest
     {
-        [Key]
         public string Id { get; set; }
 
         [Required, DataType(DataType.EmailAddress)]

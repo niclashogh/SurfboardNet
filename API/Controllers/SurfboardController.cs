@@ -1,5 +1,5 @@
-﻿using Lib.Models.Product;
-using Lib.Services.Data;
+﻿using API.Data;
+using Lib.Models.Product;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

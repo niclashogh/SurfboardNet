@@ -1,8 +1,8 @@
-using Lib.Models.User;
-using Lib.Services.Data;
+﻿using Lib.Models.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using Rent.Data;
 using System.Globalization;
 
 namespace Rent
@@ -15,12 +15,15 @@ namespace Rent
 
             // Add DbContext
             builder.Services.AddDbContext<ProductContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("productcontext") ?? throw new InvalidOperationException("Connection string 'productcontext' not found.")));
+                options.UseSqlServer(builder.Configuration.GetConnectionString("dbcontext") ?? throw new InvalidOperationException("Connection string 'dbcontext' not found.")));
+
+            builder.Services.AddDbContext<CustomerContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("dbcontext") ?? throw new InvalidOperationException("Connection string 'dbcontext' not found.")));
 
             // Add Defualt Identity
-            builder.Services.AddDefaultIdentity<Customer>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddRoles<IdentityRole>() // Add support for roles
-                .AddEntityFrameworkStores<ProductContext>();
+            //builder.Services.AddDefaultIdentity<Customer>(options => options.SignIn.RequireConfirmedAccount = true)
+            //    .AddRoles<IdentityRole>() // Add support for roles
+            //    .AddEntityFrameworkStores<ProductContext>();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
@@ -71,7 +74,7 @@ namespace Rent
                 //    roleManager.CreateAsync(new IdentityRole("Guest")).Wait();
                 //}
 
-                SeedData.Initialize(services);
+                //SeedData.Initialize(services);
             }
             #endregion
 

@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace Rent.Services
+﻿namespace API.Service.Api
 {
     public interface IApi <T> where T : class
     {

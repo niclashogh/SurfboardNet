@@ -1,4 +1,4 @@
-using Lib.Services.Data;
+using API.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace API
@@ -11,7 +11,10 @@ namespace API
 
             // Add BbContext
             builder.Services.AddDbContext<ProductContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("productcontext") ?? throw new InvalidOperationException("Connection string 'productcontext' not found.")));
+                options.UseSqlServer(builder.Configuration.GetConnectionString("dbcontext") ?? throw new InvalidOperationException("Connection string 'dbcontext' not found.")));
+
+            builder.Services.AddDbContext<CustomerContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("dbcontext") ?? throw new InvalidOperationException("Connection string 'dbcontext' not found.")));
 
             // Add services to the container.
             builder.Services.AddControllers();
